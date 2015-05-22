@@ -1,7 +1,8 @@
 <?php namespace Fadion\Maneuver;
 
-use Banago\Bridge\Bridge;
 use Exception;
+use League\Flysystem\Filesystem;
+use Fadion\Maneuver\Deploy\Adapter;
 
 /**
  * Class Maneuver
@@ -107,16 +108,26 @@ class Maneuver {
             try {
                 $options = isset($credentials['options']) ? $credentials['options'] : array();
 
-                // Connect to the server using the selected
-                // scheme and options.
-                $bridge = new Bridge(http_build_url('', $credentials), $options);
+                switch ($credentials['scheme']) {
+                    case 'ftp':
+                        // Connect to the server using the selected
+                        // scheme and options.
+                        $filesystem = new Filesystem(new Adapter\Ftp($options));
+                        break;
+                    default:
+                        throw \NotImplemented('Scheme ' . $credentials['scheme'] . ' is not implemented :(');
+                        break;
+                }
+
+
             }
             catch (Exception $e) {
                 print "Oh snap: {$e->getMessage()}";
                 continue;
             }
 
-            $deploy = new Deploy($git, $bridge, $credentials);
+
+            $deploy = new Deploy($git, $filesystem, $credentials);
 
             print "\r\n+ --------------- § --------------- +";
             print "\n» Server: $name";
