@@ -241,7 +241,7 @@ class Deploy {
             $output[] = "√ \033[0;37m{$file}\033[0m \033[0;32muploaded\033[0m";
 
         } catch (\Exception $e) {
-            var_dump($e);die;
+            $output[] = "⊘ \033[0;37mFailed\033[0m";
         }
 
         return $output;
