@@ -89,7 +89,7 @@ class Deploy {
         }
 
         if ($this->filesystem->has($this->revisionFile)) {
-            $remoteRevision = $this->filesystem->get($this->revisionFile);
+            $remoteRevision = $this->filesystem->read($this->revisionFile);
 
             $message = "\r\n» Taking it from '" . substr($remoteRevision, 0, 7) . "'";
         } else {
@@ -241,6 +241,8 @@ class Deploy {
             $output[] = "√ \033[0;37m{$file}\033[0m \033[0;32muploaded\033[0m";
 
         } catch (\Exception $e) {
+            $output[] = "⊘ \033[0;37mFailed\033[0m";
+        } catch (\ErrorException $e) {
             $output[] = "⊘ \033[0;37mFailed\033[0m";
         }
 
