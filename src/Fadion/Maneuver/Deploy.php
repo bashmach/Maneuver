@@ -28,7 +28,7 @@ class Deploy {
     /**
      * @var string Revision filename
      */
-    protected $revisionFile = '.revision';
+    protected $revisionFile;
 
     /**
      * @var string Commit to sync revision file to
@@ -68,6 +68,7 @@ class Deploy {
         $this->bridge = $bridge;
         $this->ignoredFiles = $git->getIgnored();
         $this->server = $server;
+        $this->revisionFile = config('maneuver.revisionFile');
     }
 
     /**

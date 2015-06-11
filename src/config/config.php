@@ -26,6 +26,15 @@ return array(
 
     /*
     |--------------------------------------------------------------------------
+    | Name of revision file
+    |--------------------------------------------------------------------------
+    |
+    | File which stores the hash of latest repository revision deployed to the server
+    */
+    'revisionFile' => env('DEPLOY_REVISION_FILE', '.revision'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Connections List
     |--------------------------------------------------------------------------
     |
